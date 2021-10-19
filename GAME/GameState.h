@@ -8,9 +8,6 @@ class GameState : public State
 private:
 	Gameengine gameengine;
 
-
-	//Comment
-
 	//Function
 	//void initVar();
 public:
