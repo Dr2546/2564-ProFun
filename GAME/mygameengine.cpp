@@ -54,7 +54,9 @@ void mygameengine::updateSFMLEvent()
 {
 	while (this->window->pollEvent(this->ev))
 	{
-		if (this->ev.type == sf::Event::Closed)
+		if (this->ev.type == Event::Closed)
+			this->window->close();
+		if (ev.KeyPressed && ev.key.code == Keyboard::Escape)
 			this->window->close();
 	}
 }
