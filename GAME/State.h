@@ -30,8 +30,6 @@ protected:
 
 	Vector2i mousePosScreen;
 	Vector2i mousePosWindow;
-	Vector2f mousePosView;
-	Vector2i mousePosGrid;
 
 	//Resources
 	map<string, Texture> textures;
@@ -52,7 +50,7 @@ public:
 	void pauseState();
 	void unpauseState();
 
-	virtual void updateMousePositions(View* view = NULL);
+	virtual void updateMousePositions();
 	virtual void updateKeytime(const float& dt);
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float& dt) = 0;

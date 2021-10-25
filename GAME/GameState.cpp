@@ -5,14 +5,6 @@ void GameState::initGUI()
 	if (!this->font.loadFromFile("Resources/PixellettersFull.ttf"))
 		cout << "Failed to load font" << "\n";
 
-	this->gameovertext.setFont(font);
-	this->gameovertext.setCharacterSize(60);
-	this->gameovertext.setFillColor(sf::Color::Red);
-	this->gameovertext.setString("Game Over!");
-	this->gameovertext.setPosition(
-		this->window->getSize().x / 2.f - this->gameovertext.getGlobalBounds().width / 2.f,
-		this->window->getSize().y / 2.f - this->gameovertext.getGlobalBounds().height / 2.f);
-
 	this->scoretext.setFont(font);
 	this->scoretext.setCharacterSize(30);
 	this->scoretext.setFillColor(sf::Color::Red);
@@ -27,6 +19,27 @@ void GameState::initGUI()
 
 	this->hpbarback = this->hpbar;
 	this->hpbarback.setFillColor(Color(25, 25, 25, 200));
+
+	this->gameovertext.setFont(this->font);
+	this->gameovertext.setCharacterSize(60);
+	this->gameovertext.setFillColor(sf::Color::Red);
+	this->gameovertext.setString("Game Over!");
+	this->gameovertext.setPosition(
+		this->window->getSize().x / 2.f - this->gameovertext.getGlobalBounds().width / 2.f,
+		this->window->getSize().y / 2.f - this->gameovertext.getGlobalBounds().height / 2.f);
+
+	this->returntomenu = new gui::Button(300.f, 100.f, 100.f, 100.f, &this->font, "Return", 50,
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+}
+
+void GameState::resetGUI()
+{
+	delete this->returntomenu;
+
+	this->returntomenu = new gui::Button(300.f, 100.f, 100.f, 100.f, &this->font, "Return", 50,
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
 }
 
 void GameState::initPlayer()
@@ -41,11 +54,13 @@ void GameState::initEnemy()
 	this->spawnTime = this->spawnTimeMax;
 }
 
-GameState::GameState(StateData* statedata) : State(statedata)
+GameState::GameState(StateData* statedata,string name) : State(statedata)
 {
 	this->initPlayer();
+	this->name = name;
 	this->initEnemy();
 	this->initGUI();
+	this->resetGUI();
 }
 
 GameState::~GameState()
@@ -54,6 +69,8 @@ GameState::~GameState()
 
 	for (auto* i : this->enemies)
 		delete i;
+
+	delete this->returntomenu;
 }
 
 void GameState::updateInput(const float& dt)
@@ -162,6 +179,11 @@ void GameState::updateEnemy()
 	}
 }
 
+void GameState::updateButton()
+{
+	this->returntomenu->update(this->mousePosWindow);
+}
+
 void GameState::updateGUI()
 {
 	float hpPercent = static_cast<float>(this->player->getHp()) / this->player->getHpMax();
@@ -175,6 +197,14 @@ void GameState::updateGUI()
 	this->scoretext.setString(s);
 }
 
+void GameState::updateFile()
+{
+	this->scoreboard.open("Resources/scoreboard.txt", ios_base::out | ios_base::app);
+	this->scoreboard << this->name << " ";
+	this->scoreboard << this->score << endl;
+	this->scoreboard.close();
+}
+
 void GameState::renderGUI()
 {
 	this->window->draw(this->hpbarback);
@@ -183,12 +213,18 @@ void GameState::renderGUI()
 
 void GameState::update(const float& dt)
 {
+	this->updateMousePositions();
 	this->updatePollevent();
-
 	this->player->update();
 	this->updateMovement();
 	this->updateEnemy();
 	this->updateGUI();
+	this->updateButton();
+	if (this->player->getHp() <= 0 && this->isSave == false)
+	{
+		this->updateFile();
+		this->isSave = true;
+	}
 }
 
 void GameState::render(RenderTarget* target)
@@ -196,21 +232,24 @@ void GameState::render(RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-		//Draw all the stuffs
-		//Render player
-	this->player->render(*this->window);
-
-	//Render enemies
-	for (auto* enemy : this->enemies)
-		enemy->render(*this->window);
-
-	this->renderGUI();
-
 	if (this->player->getHp() <= 0)
 	{
-		this->window->clear();
 		this->window->draw(this->gameovertext);
+		this->returntomenu->render(*target);
+		if(this->returntomenu->isPress())
+			this->endState();
 	}
-	this->window->draw(this->scoretext);
+	else
+	{
+		//Draw all the stuffs
+		//Render player
+		this->player->render(*this->window);
 
+		//Render enemies
+		for (auto* enemy : this->enemies)
+			enemy->render(*this->window);
+
+		this->renderGUI();
+		this->window->draw(this->scoretext);
+	}
 }

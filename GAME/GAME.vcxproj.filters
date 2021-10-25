@@ -16,6 +16,9 @@
     <Filter Include="State">
       <UniqueIdentifier>{086437d3-cf89-4fc0-bb98-8700e359ec8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{0578b01e-26da-4f61-980c-e207d32a7296}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -51,6 +54,15 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Leaderboard.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameoverstate.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -81,6 +93,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MenuState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaderboard.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameoverstate.h">
       <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>

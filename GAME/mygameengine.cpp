@@ -50,21 +50,9 @@ void mygameengine::updateDt()
 	this->dt = this->dtClock.restart().asSeconds();
 }
 
-void mygameengine::updateSFMLEvent()
-{
-	while (this->window->pollEvent(this->ev))
-	{
-		if (this->ev.type == Event::Closed)
-			this->window->close();
-		if (ev.KeyPressed && ev.key.code == Keyboard::Escape)
-			this->window->close();
-	}
-}
 
 void mygameengine::update()
 {
-	this->updateSFMLEvent();
-
 	if (!this->states.empty())
 	{
 		if (this->window->hasFocus())

@@ -1,7 +1,8 @@
 #pragma once
 #include "allheader.h"
 #include "State.h"
-//#include "Gameengine.h"
+#include "Gameoverstate.h"
+#include "Gui.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -9,9 +10,15 @@ class GameState : public State
 {
 private:
 
+	//File
+	fstream scoreboard;
+	bool isSave = false;
+
 	//Player
+	string name;
 	Player* player;
 	int score;
+	bool dead = true;
 
 	//PlayerGUI
 	RectangleShape hpbar;
@@ -24,16 +31,17 @@ private:
 
 	//GUI
 	Font font;
-	Text gameovertext;
 	Text scoretext;
-
+	Text gameovertext;
+	gui::Button* returntomenu;
 
 	//Function
 	void initGUI();
+	void resetGUI();
 	void initPlayer();
 	void initEnemy();
 public:
-	GameState(StateData* statedata);
+	GameState(StateData* statedata,string name);
 	virtual ~GameState();
 
 	//Function
@@ -45,7 +53,9 @@ public:
 	void updatePollevent();
 	void updateMovement();
 	void updateEnemy();
+	void updateButton();
 	void updateGUI();
+	void updateFile();
 	void renderGUI();
 };
 

@@ -27,7 +27,6 @@ public:
 
 	//Update function
 	void updateDt();
-	void updateSFMLEvent();
 	void update();
 
 	//Render

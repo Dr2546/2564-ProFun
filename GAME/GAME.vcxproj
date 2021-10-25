@@ -22,8 +22,11 @@
     <ClCompile Include="allheader.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Gameengine.cpp" />
+    <ClCompile Include="Gameoverstate.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Gui.cpp" />
     <ClCompile Include="Hitbox.cpp" />
+    <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MovementState.cpp" />
     <ClCompile Include="mygame.cpp" />
@@ -35,8 +38,11 @@
     <ClInclude Include="allheader.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Gameengine.h" />
+    <ClInclude Include="Gameoverstate.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Gui.h" />
     <ClInclude Include="Hitbox.h" />
+    <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MovementState.h" />
     <ClInclude Include="mygameengine.h" />
@@ -139,7 +145,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
