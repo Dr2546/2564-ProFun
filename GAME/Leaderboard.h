@@ -6,14 +6,16 @@ class Leaderboard : public State
 {
 private:
 	//File
-	ifstream scoreboard;
-	map<string, int> score;
+	fstream scoreboard;
+	vector<pair<string,int>> score;
 
 	//Gui
 	Text board;
 	Font font;
 	RectangleShape line1;
 	RectangleShape line2;
+	vector<Text> players;
+	vector<Text> player_score;
 
 	//Button
 	map<string, gui::Button*> buttons;
@@ -23,7 +25,9 @@ private:
 	void initFont();
 	void initButtons();
 	void resetButtons();
+	void initScoreboardText();
 
+	int get_rank(string input);
 public:
 	Leaderboard(StateData* statedata);
 	virtual ~Leaderboard();
@@ -35,5 +39,6 @@ public:
 	void updateButtons();
 	void renderGUI();
 	void renderButtons();
+	void renderScoreboardText();
 };
 

@@ -2,13 +2,33 @@
 
 void Leaderboard::initScoreboard()
 {
-	this->scoreboard.open("Resources/scoreboard.txt");
-	string name;
-	int playerscore;
-	while (this->scoreboard >> name >> playerscore)
+	this->scoreboard.open("Resources/scoreboard.txt", ios_base::in);
+	
+	vector<string> v;
+	string line;
+	for (; getline(this->scoreboard, line); )
+		v.push_back(line);
+	sort(v.begin(), v.end(), [&](string s1, string s2) -> bool { return this->get_rank(s1) > this->get_rank(s2); });
+
+	for (auto i = v.begin(); i != v.end(); i++)
 	{
-		score[name] = playerscore;
+		string name, scores;
+		name = *i;
+
+		string::size_type pos = name.find(' ');
+
+		if (name.npos != pos)
+		{
+			scores = name.substr(pos + 1);
+			name = name.substr(0, pos);
+		}
+
+		score.push_back(make_pair(name, stoi(scores)));
+
+		if (score.size() >= 5)
+			break;
 	}
+
 	this->scoreboard.close();
 }
 
@@ -62,11 +82,47 @@ void Leaderboard::resetButtons()
 	this->initButtons();
 }
 
+void Leaderboard::initScoreboardText()
+{
+	float space = 0.f;	
+	auto its = this->score.begin();
+	for (its = this->score.begin(); its != this->score.end(); its++)
+	{
+		Text dumname;
+		dumname.setCharacterSize(50);
+		dumname.setFillColor(Color::White);
+		dumname.setFont(this->font);
+		dumname.setString(its->first);
+		dumname.setPosition(Vector2f(800.f, 200.f + space));
+		players.push_back(dumname);
+
+		Text dumscore;
+		dumscore.setCharacterSize(50);
+		dumscore.setFillColor(Color::White);
+		dumscore.setFont(this->font);
+		dumscore.setString(to_string(its->second));
+		dumscore.setPosition(Vector2f(1000.f, 200.f + space));
+		player_score.push_back(dumscore);
+
+		space += 100.f;
+	}
+}
+
+int Leaderboard::get_rank(string input)
+{
+	stringstream ss(input);
+	string s;
+	// keep extracting strings, last one would be your 'int' rank
+	for (; ss >> s; );
+	return atoi(s.c_str());
+}
+
 Leaderboard::Leaderboard(StateData* statedata) : State(statedata)
 {
 	this->initFont();
 	this->initGUI();
 	this->initScoreboard();
+	this->initScoreboardText();
 	this->initButtons();
 	this->resetButtons();
 }
@@ -93,6 +149,7 @@ void Leaderboard::render(RenderTarget* target)
 
 	this->renderGUI();
 	this->renderButtons();
+	this->renderScoreboardText();
 }
 
 void Leaderboard::updateButtons()
@@ -108,9 +165,7 @@ void Leaderboard::updateButtons()
 	if (this->buttons["CLEAR"]->isPress())
 	{
 		if (remove("Resources/scoreboard.txt"))
-		{
-			;
-		}
+			this->endState();
 	}
 }
 
@@ -125,4 +180,16 @@ void Leaderboard::renderButtons()
 {
 	for (auto& it : this->buttons)
 		it.second->render(*this->window);
+}
+
+void Leaderboard::renderScoreboardText()
+{
+	for (auto& its : this->players)
+	{
+		this->window->draw(its);
+	}
+	for (auto& it : this->player_score)
+	{
+		this->window->draw(it);
+	}
 }

@@ -73,7 +73,7 @@ void MenuState::updateState()
 	for (auto& it : this->buttons)
 		it.second->update(this->mousePosWindow);
 
-	if (this->buttons["GAME_STATE"]->isPress())
+	if (this->buttons["GAME_STATE"]->isPress() && this->textboxes["TESTBOX"]->getText() != "")
 	{
 		this->name = this->textboxes["TESTBOX"]->getText();
 		this->states->push(new GameState(this->stateData,this->name));
