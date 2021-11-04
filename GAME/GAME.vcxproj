@@ -26,13 +26,16 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="Hitbox.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MovementState.cpp" />
     <ClCompile Include="mygame.cpp" />
     <ClCompile Include="mygameengine.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Speedboost.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allheader.h" />
@@ -42,12 +45,15 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="Hitbox.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MovementState.h" />
     <ClInclude Include="mygameengine.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Speedboost.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Sword.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

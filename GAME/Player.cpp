@@ -9,6 +9,9 @@ void Player::initVar()
 	this->atkcooldownMax = 10.f;
 	this->atkcooldown = this->atkcooldownMax;
 
+	//Weapon
+	this->weapon = "sword";
+
 	//Status 0 is idle 1 is attacking 2 is running
 	this->status = 0;
 
@@ -17,8 +20,8 @@ void Player::initVar()
 
 	//Init hitbox
 	this->createHitbox(this->sprite, 33.f, 13.f, 63.f, 100.f,Color::Green);
-	this->createAtkboxR(this->sprite, 96.f, 27.f, 22.f, 18.f, Color::Yellow);
-	this->createAtkboxL(this->sprite, 20.f, 30.f, 13.f, 12.f, Color::Yellow);
+	this->createAtkboxR(this->sprite, 96.f, 27.f, 22.f, 18.f, Color::Yellow,this->weapon);
+	this->createAtkboxL(this->sprite, 20.f, 30.f, 13.f, 12.f, Color::Yellow,this->weapon);
 }
 
 void Player::initTexture()
@@ -55,6 +58,11 @@ void Player::initSprite()
 	this->sprite.setTexture(this->idleR);
 }
 
+void Player::initSword()
+{
+	this->sword = new Sword();
+}
+
 //Constructor && Destructor
 Player::Player()
 {
@@ -62,6 +70,7 @@ Player::Player()
 	this->initVar();
 	this->initTexture();
 	this->initSprite();
+	this->initSword();
 }
 
 Player::~Player()
@@ -79,19 +88,46 @@ const sf::FloatRect Player::getBound() const
 	return this->sprite.getGlobalBounds();
 }
 
+const float Player::getSpeed() const
+{
+	return this->movespeed;
+}
+
+void Player::setSpeed(float s)
+{
+	this->movespeed = s;
+}
+
+string Player::getWeapon()
+{
+	return this->weapon;
+}
+
 void Player::createHitbox(Sprite& sprite, float offsetX, float offsetY, float width, float height,Color color)
 {
 	this->hitbox = new Hitbox(sprite, offsetX, offsetY, width, height,color);
 }
 
-void Player::createAtkboxR(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color)
+void Player::createAtkboxR(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color,string weapon)
 {
-	this->atkboxR = new Hitbox(sprite, offsetX, offsetY, width, height, color);
+	if (weapon == "none")
+		this->atkboxR = new Hitbox(sprite, offsetX, offsetY, width, height, color);
+	else if (weapon == "sword")
+	{
+		vector<float> data = this->sword->getHitboxR();
+		this->atkboxR = new Hitbox(sprite,offsetX + data[0],offsetY+height/2, data[2], data[3], color);
+	}
 }
 
-void Player::createAtkboxL(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color)
+void Player::createAtkboxL(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color,string weapon)
 {
-	this->atkboxL = new Hitbox(sprite, offsetX, offsetY, width, height, color);
+	if (weapon == "none")
+		this->atkboxL = new Hitbox(sprite, offsetX, offsetY, width, height, color);
+	else if (weapon == "sword")
+	{
+		vector<float> data = this->sword->getHitboxL();
+		this->atkboxL = new Hitbox(sprite,offsetX - data[2],offsetY+height/2, data[2], data[3], color);
+	}
 }
 
 FloatRect Player::getHitbox() const
@@ -219,11 +255,29 @@ void Player::updateBox()
 	this->atkboxL->update();
 }
 
+void Player::updateSword()
+{
+	if (this->direction == 1)
+	{
+		float x = this->atkboxR->getPos().x - 22.f;
+		float y = this->atkboxR->getPos().y - 27.f;
+		this->sword->setPos(x,y);
+	}
+	else if (this->direction == 0)
+	{
+		float x = this->atkboxL->getPos().x;
+		float y = this->atkboxL->getPos().y - 27.f ;
+		this->sword->setPos(x, y);
+	}
+}
+
 void Player::update()
 {
 	this->updateAttack();
 	this->updateSprite();
 	this->updateBox();
+	if(this->weapon == "sword")
+		this->updateSword();
 }
 
 void Player::render(sf::RenderTarget& target)
@@ -236,5 +290,9 @@ void Player::render(sf::RenderTarget& target)
 			this->atkboxR->render(target);
 		else if (this->direction == 0)
 			this->atkboxL->render(target);
+		if (this->weapon == "sword")
+		{
+			this->sword->render(target, this->direction);
+		}
 	}
 }

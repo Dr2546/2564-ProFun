@@ -1,2 +1,18 @@
-﻿  Leaderboard.cpp
+﻿  GameState.cpp
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(48,85): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(48,54): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+  Item.cpp
+  MenuState.cpp
+  Speedboost.cpp
+  mygame.cpp
+  mygameengine.cpp
+  Generating Code...
   GAME.vcxproj -> C:\Users\Lenovo\Dan\Dan\GAME\x64\Debug\GAME.exe

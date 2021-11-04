@@ -18,7 +18,7 @@ void GameState::initGUI()
 	this->hpbar.setPosition(Vector2f(player->getPos().x, player->getPos().y - 5.f));
 
 	this->hpbarback = this->hpbar;
-	this->hpbarback.setFillColor(Color(25, 25, 25, 200));
+	this->hpbarback.setFillColor(Color::Transparent);
 
 	this->gameovertext.setFont(this->font);
 	this->gameovertext.setCharacterSize(60);
@@ -45,13 +45,24 @@ void GameState::resetGUI()
 void GameState::initPlayer()
 {
 	this->player = new Player();
+	this->player->setPosition(this->window->getSize().x / 2, this->window->getSize().y / 2);
 	this->score = 0;
+	this->buff = "none";
 }
 
 void GameState::initEnemy()
 {
 	this->spawnTimeMax = 25.f;
-	this->spawnTime = this->spawnTimeMax;
+	this->spawnTime = 20.f;
+}
+
+void GameState::initItem()
+{
+	this->itemspawnTimeMax = 25.f;
+	this->itemspawnTime = 20.f;
+
+	this->itemdurationMax = 3.f;
+	this->itemduration = 0.f;
 }
 
 GameState::GameState(StateData* statedata,string name) : State(statedata)
@@ -59,6 +70,7 @@ GameState::GameState(StateData* statedata,string name) : State(statedata)
 	this->initPlayer();
 	this->name = name;
 	this->initEnemy();
+	this->initItem();
 	this->initGUI();
 	this->resetGUI();
 }
@@ -69,6 +81,9 @@ GameState::~GameState()
 
 	for (auto* i : this->enemies)
 		delete i;
+
+	for (auto* ii : this->speedboost)
+		delete ii;
 
 	delete this->returntomenu;
 }
@@ -205,6 +220,46 @@ void GameState::updateFile()
 	this->scoreboard.close();
 }
 
+void GameState::updateItem()
+{
+	//Spawning
+	this->itemspawnTime += 0.1f;
+	if (this->itemspawnTime >= this->itemspawnTimeMax)
+	{
+		this->speedboost.push_back(new Speedboost(rand() % this->window->getSize().x - 20.f, rand() % this->window->getSize().y - 20.f));
+		this->itemspawnTime = 0.f;
+	}
+
+	unsigned counter = 0;
+	//Intersect with player
+	for (auto* boost : this->speedboost)
+	{
+		boost->update();
+		if (boost->getHitbox().intersects(this->player->getHitbox()))
+		{
+			delete this->speedboost.at(counter);
+			this->speedboost.erase(this->speedboost.begin() + counter);
+			this->buff = "speed";
+		}
+		++counter;
+	}
+}
+
+void GameState::updateBuff()
+{
+	if (this->buff == "speed")
+	{
+		this->player->setSpeed(4.f);
+		this->itemduration += 0.01f;
+		if (this->itemduration >= this->itemdurationMax)
+		{
+			this->player->setSpeed(2.f);
+			this->buff = "none";
+			this->itemduration = 0.f;
+		}
+	}
+}
+
 void GameState::renderGUI()
 {
 	this->window->draw(this->hpbarback);
@@ -217,7 +272,9 @@ void GameState::update(const float& dt)
 	this->updatePollevent();
 	this->player->update();
 	this->updateMovement();
-	this->updateEnemy();
+	//this->updateEnemy();
+	this->updateItem();
+	this->updateBuff();
 	this->updateGUI();
 	this->updateButton();
 	if (this->player->getHp() <= 0 && this->isSave == false)
@@ -245,9 +302,12 @@ void GameState::render(RenderTarget* target)
 		//Render player
 		this->player->render(*this->window);
 
+		for (auto* boost : this->speedboost)
+			boost->render(*this->window);
+
 		//Render enemies
-		for (auto* enemy : this->enemies)
-			enemy->render(*this->window);
+		//for (auto* enemy : this->enemies)
+			//enemy->render(*this->window);
 
 		this->renderGUI();
 		this->window->draw(this->scoretext);

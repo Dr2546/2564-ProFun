@@ -5,6 +5,7 @@
 #include "Gui.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Speedboost.h"
 
 class GameState : public State
 {
@@ -19,6 +20,7 @@ private:
 	Player* player;
 	int score;
 	bool dead = true;
+	string buff;
 
 	//PlayerGUI
 	RectangleShape hpbar;
@@ -28,6 +30,13 @@ private:
 	vector<Enemy*> enemies;
 	float spawnTime;
 	float spawnTimeMax;
+
+	//Item
+	vector<Speedboost*> speedboost;
+	float itemspawnTime;
+	float itemspawnTimeMax;
+	float itemduration;
+	float itemdurationMax;
 
 	//GUI
 	Font font;
@@ -40,6 +49,7 @@ private:
 	void resetGUI();
 	void initPlayer();
 	void initEnemy();
+	void initItem();
 public:
 	GameState(StateData* statedata,string name);
 	virtual ~GameState();
@@ -56,6 +66,8 @@ public:
 	void updateButton();
 	void updateGUI();
 	void updateFile();
+	void updateItem();
+	void updateBuff();
 	void renderGUI();
 };
 

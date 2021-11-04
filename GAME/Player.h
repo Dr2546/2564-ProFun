@@ -2,6 +2,7 @@
 
 #include "allheader.h"
 #include "Hitbox.h"
+#include "Sword.h"
 
 using namespace sf;
 using namespace std;
@@ -17,6 +18,9 @@ private:
 	float atkcooldownMax;
 	int direction;
 
+	//Weapon
+	string weapon;
+
 	//Sprite and Texture
 	Sprite sprite;
 	Texture idleR;
@@ -25,6 +29,8 @@ private:
 	Texture attackL;
 	Texture runR;
 	Texture runL;
+	Texture swordR;
+	Texture swordL;
 
 	//Movement
 	float movespeed;
@@ -36,12 +42,15 @@ private:
 	void initVar();
 	void initTexture();
 	void initSprite();
-
+	void initSword();
 protected:
 	//Hitbox
 	Hitbox* hitbox;
 	Hitbox* atkboxR;
 	Hitbox* atkboxL;
+
+	//Sword
+	Sword* sword;
 
 public:
 	//Constructor && Destructor
@@ -49,14 +58,17 @@ public:
 	virtual ~Player();
 
 	//Accessor
-	const sf::Vector2f& getPos() const;
-	const sf::FloatRect getBound() const;
+	const Vector2f& getPos() const;
+	const FloatRect getBound() const;
+	const float getSpeed() const;
+	void setSpeed(float s);
+	string getWeapon();
 
 	//Hitbox
 
 	void createHitbox(Sprite& sprite, float offsetX, float offsetY, float width, float height,Color color);
-	void createAtkboxR(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color);
-	void createAtkboxL(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color);
+	void createAtkboxR(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color,string weapon);
+	void createAtkboxL(Sprite& sprite, float offsetX, float offsetY, float width, float height, Color color, string weapon);
 	FloatRect getHitbox() const;
 	FloatRect getAtkboxR() const;
 	FloatRect getAtkboxL() const;
@@ -79,6 +91,7 @@ public:
 	void updateAttack();
 	void updateSprite();
 	void updateBox();
+	void updateSword();
 	void update();
 	void render(sf::RenderTarget& target);
 };

@@ -32,14 +32,14 @@ public:
 	virtual ~Enemy();
 
 	//Accessor
-	const sf::FloatRect getBounds() const;
-	const sf::Vector2f& getPos() const;
+	const FloatRect getBounds() const;
+	const Vector2f& getPos() const;
 	FloatRect getHitbox() const;
 
 	void createHitbox(Sprite& sprite, float offsetX, float offsetY, float width, float height,Color color);
 
 	//Function
 	void move(const float x, const float y);
-	void render(sf::RenderTarget& target);
+	void render(RenderTarget& target);
 };
 

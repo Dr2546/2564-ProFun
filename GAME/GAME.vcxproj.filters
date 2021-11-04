@@ -45,9 +45,6 @@
     <ClCompile Include="mygame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hitbox.cpp">
-      <Filter>State</Filter>
-    </ClCompile>
     <ClCompile Include="mygameengine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,6 +59,18 @@
     </ClCompile>
     <ClCompile Include="Gameoverstate.cpp">
       <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="Hitbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Speedboost.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +95,6 @@
     <ClInclude Include="GameState.h">
       <Filter>State</Filter>
     </ClInclude>
-    <ClInclude Include="Hitbox.h">
-      <Filter>State</Filter>
-    </ClInclude>
     <ClInclude Include="mygameengine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -103,6 +109,18 @@
     </ClInclude>
     <ClInclude Include="Gameoverstate.h">
       <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="Hitbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Speedboost.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
