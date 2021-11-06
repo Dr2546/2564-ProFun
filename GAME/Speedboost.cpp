@@ -2,7 +2,7 @@
 
 void Speedboost::initVar()
 {
-	this->createHitbox(this->sprite, 0.f, 0.f, 60.f, 56.f, Color::White);
+	this->createHitbox(this->sprite, 0.f, 0.f, 60.f, 56.f, Color::Magenta);
 }
 
 void Speedboost::initTexture()
@@ -16,7 +16,7 @@ void Speedboost::initTexture()
 void Speedboost::initSprite()
 {
 	this->sprite.setTexture(this->texture);
-	this->sprite.scale(0.02f, 0.02f);
+	this->sprite.scale(0.08f, 0.08f);
 }
 
 Speedboost::Speedboost(float x, float y)

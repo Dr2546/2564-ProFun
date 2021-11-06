@@ -34,6 +34,7 @@ private:
 
 	//Movement
 	float movespeed;
+	float movespeedMax;
 
 	//Player Status
 	int status;
@@ -60,8 +61,10 @@ public:
 	//Accessor
 	const Vector2f& getPos() const;
 	const FloatRect getBound() const;
-	const float getSpeed() const;
+	const float getSpeedMax() const;
+	const int getHpMax() const;
 	void setSpeed(float s);
+	void setHp(int s);
 	string getWeapon();
 
 	//Hitbox

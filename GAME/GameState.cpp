@@ -82,7 +82,7 @@ GameState::~GameState()
 	for (auto* i : this->enemies)
 		delete i;
 
-	for (auto* ii : this->speedboost)
+	for (auto* ii : this->items)
 		delete ii;
 
 	delete this->returntomenu;
@@ -194,6 +194,33 @@ void GameState::updateEnemy()
 	}
 }
 
+void GameState::updateItem()
+{
+	//Spawning
+	this->itemspawnTime += 0.1f;
+	if (this->itemspawnTime >= this->itemspawnTimeMax)
+	{
+		int random = rand() % 2;
+		this->items.push_back(new Item(rand() % this->window->getSize().x - 20.f, rand() % this->window->getSize().y - 20.f,random));
+		this->itemspawnTime = 0.f;
+	}
+	
+	unsigned counter = 0;
+	//Intersect with player
+	for (auto* item : this->items)
+	{
+		item->update();
+		if (item->getHitbox().intersects(this->player->getHitbox()))
+		{
+			this->buff = item->getBuff();
+			delete this->items.at(counter);
+			this->items.erase(this->items.begin() + counter);
+		}
+		++counter;
+	}
+	
+}
+
 void GameState::updateButton()
 {
 	this->returntomenu->update(this->mousePosWindow);
@@ -220,36 +247,18 @@ void GameState::updateFile()
 	this->scoreboard.close();
 }
 
-void GameState::updateItem()
-{
-	//Spawning
-	this->itemspawnTime += 0.1f;
-	if (this->itemspawnTime >= this->itemspawnTimeMax)
-	{
-		this->speedboost.push_back(new Speedboost(rand() % this->window->getSize().x - 20.f, rand() % this->window->getSize().y - 20.f));
-		this->itemspawnTime = 0.f;
-	}
-
-	unsigned counter = 0;
-	//Intersect with player
-	for (auto* boost : this->speedboost)
-	{
-		boost->update();
-		if (boost->getHitbox().intersects(this->player->getHitbox()))
-		{
-			delete this->speedboost.at(counter);
-			this->speedboost.erase(this->speedboost.begin() + counter);
-			this->buff = "speed";
-		}
-		++counter;
-	}
-}
-
 void GameState::updateBuff()
 {
-	if (this->buff == "speed")
+	if (this->buff != "none")
 	{
-		this->player->setSpeed(4.f);
+		if (this->buff == "speed")
+		{
+			this->player->setSpeed(this->player->getSpeedMax()*2);
+		}
+		else if (this->buff == "heal")
+		{
+			this->player->setHp(this->player->getHpMax());
+		}
 		this->itemduration += 0.01f;
 		if (this->itemduration >= this->itemdurationMax)
 		{
@@ -302,12 +311,12 @@ void GameState::render(RenderTarget* target)
 		//Render player
 		this->player->render(*this->window);
 
-		for (auto* boost : this->speedboost)
-			boost->render(*this->window);
+		for (auto* item : this->items)
+			item->render(*this->window);
 
 		//Render enemies
-		//for (auto* enemy : this->enemies)
-			//enemy->render(*this->window);
+		for (auto* enemy : this->enemies)
+			enemy->render(*this->window);
 
 		this->renderGUI();
 		this->window->draw(this->scoretext);

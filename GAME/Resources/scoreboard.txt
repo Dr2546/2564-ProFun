@@ -1,3 +1,5 @@
 dan 1
 dan2 0
 dan3 1
+t 0
+t 0

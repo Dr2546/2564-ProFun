@@ -10,8 +10,8 @@ private:
 	Texture texture;
 
 	void initVar();
-	void initSprite();
 	void initTexture();
+	void initSprite();
 
 protected:
 

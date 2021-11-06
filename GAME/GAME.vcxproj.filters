@@ -19,6 +19,9 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{0578b01e-26da-4f61-980c-e207d32a7296}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{bec37ba1-03b0-4a11-a1b2-17e4d782eaf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -66,11 +69,14 @@
     <ClCompile Include="Sword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Speedboost.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Heal.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +122,14 @@
     <ClInclude Include="Sword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Speedboost.h">
-      <Filter>Header Files</Filter>
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Heal.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

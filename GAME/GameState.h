@@ -5,7 +5,7 @@
 #include "Gui.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Speedboost.h"
+#include "Item.h"
 
 class GameState : public State
 {
@@ -32,7 +32,7 @@ private:
 	float spawnTimeMax;
 
 	//Item
-	vector<Speedboost*> speedboost;
+	vector<Item*> items;
 	float itemspawnTime;
 	float itemspawnTimeMax;
 	float itemduration;

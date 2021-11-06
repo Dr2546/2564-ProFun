@@ -3,8 +3,9 @@
 //Private function
 void Player::initVar()
 {
-	this->movespeed = 2.f;
-	this->hpmax = 1;
+	this->movespeedMax = 2.f;
+	this->movespeed = this->movespeedMax;
+	this->hpmax = 2;
 	this->hp = this->hpmax;
 	this->atkcooldownMax = 10.f;
 	this->atkcooldown = this->atkcooldownMax;
@@ -88,14 +89,24 @@ const sf::FloatRect Player::getBound() const
 	return this->sprite.getGlobalBounds();
 }
 
-const float Player::getSpeed() const
+const float Player::getSpeedMax() const
 {
-	return this->movespeed;
+	return this->movespeedMax;
+}
+
+const int Player::getHpMax() const
+{
+	return this->hpmax;
 }
 
 void Player::setSpeed(float s)
 {
 	this->movespeed = s;
+}
+
+void Player::setHp(int s)
+{
+	this->hp = s;
 }
 
 string Player::getWeapon()

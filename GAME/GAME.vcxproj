@@ -25,6 +25,7 @@
     <ClCompile Include="Gameoverstate.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Gui.cpp" />
+    <ClCompile Include="Heal.cpp" />
     <ClCompile Include="Hitbox.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Gameoverstate.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Gui.h" />
+    <ClInclude Include="Heal.h" />
     <ClInclude Include="Hitbox.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Leaderboard.h" />
