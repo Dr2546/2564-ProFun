@@ -78,6 +78,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="Pausemenu.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Pausemenu.h">
+      <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,11 +31,14 @@ void GameState::initGUI()
 	this->returntomenu = new gui::Button(300.f, 100.f, 100.f, 100.f, &this->font, "Return", 50,
 		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
 		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+
 }
 
 void GameState::resetGUI()
 {
 	delete this->returntomenu;
+	//delete this->resume;
+	//delete this->quit;
 
 	this->returntomenu = new gui::Button(300.f, 100.f, 100.f, 100.f, &this->font, "Return", 50,
 		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
@@ -65,12 +68,37 @@ void GameState::initItem()
 	this->itemduration = 0.f;
 }
 
+void GameState::initPausemenu()
+{
+	this->ptext.setFont(font);
+	this->ptext.setCharacterSize(40);
+	this->ptext.setFillColor(sf::Color::Red);
+	this->ptext.setString("Pause");
+	this->ptext.setPosition(
+		this->window->getSize().x / 2.f, this->window->getSize().y / 2.f);
+
+	this->container.setFillColor(Color::Black);
+	this->container.setOutlineColor(Color::White);
+	this->container.setOutlineThickness(10);
+	this->container.setPosition(Vector2f(this->window->getSize().x / 4.f, this->window->getSize().y / 4.f));
+	this->container.setSize(Vector2f(this->window->getSize().x / 2.f, this->window->getSize().y / 2.f));
+
+	this->resume = new gui::Button(this->window->getSize().x / 2.f - 300.f, this->window->getSize().y / 2.f, 100.f, 100.f, &this->font, "Resume", 50,
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+
+	this->quit = new gui::Button(this->window->getSize().x / 2.f + 300.f, this->window->getSize().y / 2.f, 100.f, 100.f, &this->font, "Quit", 50,
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
+}
+
 GameState::GameState(StateData* statedata,string name) : State(statedata)
 {
 	this->initPlayer();
 	this->name = name;
 	this->initEnemy();
 	this->initItem();
+	this->initPausemenu();
 	this->initGUI();
 	this->resetGUI();
 }
@@ -90,6 +118,13 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& dt)
 {
+	if (Keyboard::isKeyPressed(Keyboard::Escape) && this->getKeytime())
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
 }
 
 void GameState::updatePollevent()
@@ -100,7 +135,7 @@ void GameState::updatePollevent()
 		if (e.Event::type == Event::Closed)
 			this->window->close();
 		if (e.Event::KeyPressed && e.Event::key.code == Keyboard::Escape)
-			this->window->close();
+			this->pauseState();
 	}
 }
 
@@ -269,28 +304,55 @@ void GameState::updateBuff()
 	}
 }
 
+void GameState::updatePausemenu()
+{
+	if (this->resume->isPress())
+		this->unpauseState();
+	else if (this->quit->isPress())
+		this->endState();
+}
+
+
+void GameState::update(const float& dt)
+{
+	this->updateMousePositions();
+	this->updatePollevent();
+	//this->updateInput(dt);
+	//this->updateKeytime(dt);
+
+	if (this->paused)
+	{
+		this->resume->update(this->mousePosWindow);
+		this->quit->update(this->mousePosWindow);
+		this->updatePausemenu();
+	}
+	else
+	{
+		this->player->update();
+		this->updateMovement();
+		//this->updateEnemy();
+		this->updateItem();
+		this->updateBuff();
+		this->updateGUI();
+		this->updateButton();
+		if (this->player->getHp() <= 0 && this->isSave == false)
+		{
+			this->updateFile();
+			this->isSave = true;
+		}
+	}
+}
+
 void GameState::renderGUI()
 {
 	this->window->draw(this->hpbarback);
 	this->window->draw(this->hpbar);
 }
 
-void GameState::update(const float& dt)
+void GameState::renderPausemenu()
 {
-	this->updateMousePositions();
-	this->updatePollevent();
-	this->player->update();
-	this->updateMovement();
-	//this->updateEnemy();
-	this->updateItem();
-	this->updateBuff();
-	this->updateGUI();
-	this->updateButton();
-	if (this->player->getHp() <= 0 && this->isSave == false)
-	{
-		this->updateFile();
-		this->isSave = true;
-	}
+	this->window->draw(this->container);
+	this->window->draw(this->ptext);
 }
 
 void GameState::render(RenderTarget* target)
@@ -319,6 +381,12 @@ void GameState::render(RenderTarget* target)
 			enemy->render(*this->window);
 
 		this->renderGUI();
+		if (this->paused)
+		{
+			this->renderPausemenu(); 
+			this->resume->render(*target);
+			this->quit->render(*target);
+		}
 		this->window->draw(this->scoretext);
 	}
 }

@@ -33,6 +33,7 @@
     <ClCompile Include="MovementState.cpp" />
     <ClCompile Include="mygame.cpp" />
     <ClCompile Include="mygameengine.cpp" />
+    <ClCompile Include="Pausemenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Speedboost.cpp" />
     <ClCompile Include="State.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MovementState.h" />
     <ClInclude Include="mygameengine.h" />
+    <ClInclude Include="Pausemenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Speedboost.h" />
     <ClInclude Include="State.h" />

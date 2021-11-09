@@ -44,12 +44,19 @@ private:
 	Text gameovertext;
 	gui::Button* returntomenu;
 
+	//PauseMenu
+	RectangleShape container;
+	Text ptext;
+	gui::Button* resume;
+	gui::Button* quit;
+
 	//Function
 	void initGUI();
 	void resetGUI();
 	void initPlayer();
 	void initEnemy();
 	void initItem();
+	void initPausemenu();
 public:
 	GameState(StateData* statedata,string name);
 	virtual ~GameState();
@@ -68,7 +75,9 @@ public:
 	void updateFile();
 	void updateItem();
 	void updateBuff();
+	void updatePausemenu();
 	void renderGUI();
+	void renderPausemenu();
 };
 
 
