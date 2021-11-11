@@ -63,6 +63,7 @@ public:
 	const FloatRect getBound() const;
 	const float getSpeedMax() const;
 	const int getHpMax() const;
+	const int getDirection() const;
 	void setSpeed(float s);
 	void setHp(int s);
 	string getWeapon();

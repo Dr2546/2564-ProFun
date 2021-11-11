@@ -123,7 +123,7 @@ void gui::Textbox::backspace()
 
 void gui::Textbox::getInput(int charType)
 {
-	if (charType != ESC && charType != BACKSPACE && charType != ENTER)
+	if (charType != ESC && charType != BACKSPACE && charType != ENTER && charType != SPACEBAR)
 	{
 		this->text << static_cast<char>(charType);
 	}

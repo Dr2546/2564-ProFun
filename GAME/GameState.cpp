@@ -218,7 +218,13 @@ void GameState::updateEnemy()
 			this->enemies.erase(this->enemies.begin() + counter);
 			this->player->gethit();
 		}
-		else if ((enemy->getHitbox().intersects(this->player->getAtkboxL()) || enemy->getHitbox().intersects(this->player->getAtkboxR())) && player->getStatus() == 1)
+		else if ((enemy->getHitbox().intersects(this->player->getAtkboxL()) && player->getDirection() == 0) && player->getStatus() == 1)
+		{
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
+			this->score++;
+		}
+		else if ((enemy->getHitbox().intersects(this->player->getAtkboxR()) && player->getDirection() == 1) && player->getStatus() == 1)
 		{
 			delete this->enemies.at(counter);
 			this->enemies.erase(this->enemies.begin() + counter);
@@ -317,28 +323,31 @@ void GameState::update(const float& dt)
 {
 	this->updateMousePositions();
 	this->updatePollevent();
+	this->updateButton();
 	//this->updateInput(dt);
 	//this->updateKeytime(dt);
 
-	if (this->paused)
+	if (this->player->getHp() > 0)
 	{
-		this->resume->update(this->mousePosWindow);
-		this->quit->update(this->mousePosWindow);
-		this->updatePausemenu();
-	}
-	else
-	{
-		this->player->update();
-		this->updateMovement();
-		//this->updateEnemy();
-		this->updateItem();
-		this->updateBuff();
-		this->updateGUI();
-		this->updateButton();
-		if (this->player->getHp() <= 0 && this->isSave == false)
+		if (this->paused)
 		{
-			this->updateFile();
-			this->isSave = true;
+			this->resume->update(this->mousePosWindow);
+			this->quit->update(this->mousePosWindow);
+			this->updatePausemenu();
+		}
+		else
+		{
+			this->player->update();
+			this->updateMovement();
+			this->updateEnemy();
+			this->updateItem();
+			this->updateBuff();
+			this->updateGUI();
+			if (this->player->getHp() <= 0 && this->isSave == false)
+			{
+				this->updateFile();
+				this->isSave = true;
+			}
 		}
 	}
 }

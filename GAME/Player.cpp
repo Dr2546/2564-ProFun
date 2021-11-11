@@ -99,6 +99,11 @@ const int Player::getHpMax() const
 	return this->hpmax;
 }
 
+const int Player::getDirection() const
+{
+	return this->direction;
+}
+
 void Player::setSpeed(float s)
 {
 	this->movespeed = s;
