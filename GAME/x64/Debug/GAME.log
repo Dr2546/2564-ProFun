@@ -1,21 +1,2 @@
-﻿  GameState.cpp
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(51,85): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(51,54): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-  Gameoverstate.cpp
-  Gui.cpp
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\Gui.cpp(229,2): warning C4809: switch statement has redundant 'default' label; all possible 'case' labels are given
-  Leaderboard.cpp
-  MenuState.cpp
-  mygame.cpp
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\mygame.cpp(6,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  mygameengine.cpp
-  Generating Code...
+﻿  Enemy.cpp
   GAME.vcxproj -> C:\Users\Lenovo\Dan\Dan\GAME\x64\Debug\GAME.exe

@@ -69,7 +69,7 @@ public:
 	//Additional Function
 	void updatePollevent();
 	void updateMovement();
-	void updateEnemy();
+	void updateEnemy(const float& dt);
 	void updateButton();
 	void updateGUI();
 	void updateFile();

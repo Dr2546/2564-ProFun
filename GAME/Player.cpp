@@ -5,8 +5,8 @@ void Player::initVar()
 {
 	this->movespeedMax = 2.f;
 	this->movespeed = this->movespeedMax;
-	this->hpmax = 2;
-	this->hp = this->hpmax;
+	this->hpmax = 10;
+	this->hp = 2;
 	this->atkcooldownMax = 10.f;
 	this->atkcooldown = this->atkcooldownMax;
 

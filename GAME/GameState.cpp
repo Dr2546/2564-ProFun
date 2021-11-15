@@ -181,7 +181,7 @@ void GameState::updateMovement()
 	}
 }
 
-void GameState::updateEnemy()
+void GameState::updateEnemy(const float& dt)
 {
 	//Spawning
 	this->spawnTime += 0.5f;
@@ -198,18 +198,29 @@ void GameState::updateEnemy()
 		//Move to player
 		if (enemy->getPos().x <= player->getPos().x)
 		{
+			enemy->setDirection(0);
 			if (enemy->getPos().y >= player->getPos().y)
+			{
 				enemy->move(1.f, -1.f);
+			}
 			else if (enemy->getPos().y <= player->getPos().y)
+			{
 				enemy->move(1.f, 1.f);
+			}
 		}
 		else if (enemy->getPos().x >= player->getPos().x)
 		{
+			enemy->setDirection(1);
 			if (enemy->getPos().y >= player->getPos().y)
+			{
 				enemy->move(-1.f, -1.f);
+			}
 			else if (enemy->getPos().y <= player->getPos().y)
+			{
 				enemy->move(-1.f, 1.f);
+			}
 		}
+		enemy->playAnimation(dt);
 
 		//Intersect with player
 		if (enemy->getHitbox().intersects(this->player->getHitbox()))
@@ -339,7 +350,7 @@ void GameState::update(const float& dt)
 		{
 			this->player->update();
 			this->updateMovement();
-			this->updateEnemy();
+			this->updateEnemy(dt);
 			this->updateItem();
 			this->updateBuff();
 			this->updateGUI();
