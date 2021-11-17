@@ -3,6 +3,7 @@
 #include "allheader.h"
 #include "Hitbox.h"
 #include "Sword.h"
+#include "Animation.h"
 
 using namespace sf;
 using namespace std;
@@ -23,6 +24,7 @@ private:
 
 	//Sprite and Texture
 	Sprite sprite;
+	Texture sheet;
 	Texture idleR;
 	Texture idleL;
 	Texture attackR;
@@ -44,11 +46,15 @@ private:
 	void initTexture();
 	void initSprite();
 	void initSword();
+	void initAnimation();
 protected:
 	//Hitbox
 	Hitbox* hitbox;
 	Hitbox* atkboxR;
 	Hitbox* atkboxL;
+
+	//Animation
+	Animation* animation;
 
 	//Sword
 	Sword* sword;
@@ -92,6 +98,7 @@ public:
 	const bool canAttack();
 	int getStatus();
 
+	void playAnimation(const float& dt);
 	void updateAttack();
 	void updateSprite();
 	void updateBox();

@@ -6,7 +6,7 @@ void Player::initVar()
 	this->movespeedMax = 2.f;
 	this->movespeed = this->movespeedMax;
 	this->hpmax = 10;
-	this->hp = 2;
+	this->hp = this->hpmax;
 	this->atkcooldownMax = 10.f;
 	this->atkcooldown = this->atkcooldownMax;
 
@@ -20,9 +20,11 @@ void Player::initVar()
 	this->direction = 1;
 
 	//Init hitbox
-	this->createHitbox(this->sprite, 33.f, 13.f, 63.f, 100.f,Color::Green);
-	this->createAtkboxR(this->sprite, 96.f, 27.f, 22.f, 18.f, Color::Yellow,this->weapon);
-	this->createAtkboxL(this->sprite, 20.f, 30.f, 13.f, 12.f, Color::Yellow,this->weapon);
+	this->createHitbox(this->sprite, 19.f, 7.f, 73.f, 95.f,Color::Green);
+	this->createAtkboxR(this->sprite, 75.f, 60.f, 22.f, 18.f, Color::Yellow,this->weapon);
+	this->createAtkboxL(this->sprite, 15.f, 60.f, 22.f, 18.f, Color::Yellow,this->weapon);
+
+	this->animation = NULL;
 }
 
 void Player::initTexture()
@@ -52,11 +54,16 @@ void Player::initTexture()
 	{
 		cout << "Could not load texture file." << "\n";
 	}
+	if (!this->sheet.loadFromFile("Resources/Player/player.png"))
+	{
+		cout << "Could not load texture file." << "\n";
+	}
 }
 
 void Player::initSprite()
 {
-	this->sprite.setTexture(this->idleR);
+	this->sprite.setTexture(this->sheet);
+	this->sprite.scale(1.75f, 1.75f);
 }
 
 void Player::initSword()
@@ -64,18 +71,32 @@ void Player::initSword()
 	this->sword = new Sword();
 }
 
+void Player::initAnimation()
+{
+	this->animation->addAnimation("LEFT", 30.f, 4, 1, 7, 1, 64, 64);
+	this->animation->addAnimation("RIGHT", 30.f, 8, 1, 11, 1, 64, 64);
+	this->animation->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
+	this->animation->addAnimation("ATKR", 30.f, 11, 1, 11, 1, 64, 64);
+	this->animation->addAnimation("ATKL", 30.f, 7, 1, 7, 1, 64, 64);
+}
+
 //Constructor && Destructor
 Player::Player()
 {
 	//Initialize
 	this->initVar();
+
+	this->animation = new Animation(this->sprite, this->sheet);
+
 	this->initTexture();
 	this->initSprite();
+	this->initAnimation();
 	this->initSword();
 }
 
 Player::~Player()
 {
+	delete this->animation;
 }
 
 //Accessor
@@ -250,6 +271,36 @@ int Player::getStatus()
 }
 
 
+void Player::playAnimation(const float& dt)
+{
+	if (this->status == 0)
+	{
+		this->animation->play("IDLE", dt, this->movespeed,this->movespeedMax);
+	}
+	else if (this->status == 1)
+	{
+		if (this->direction == 1)
+		{
+			this->animation->play("ATKR", dt, this->movespeed, this->movespeedMax);
+		}
+		else if (this->direction == 0)
+		{
+			this->animation->play("ATKL", dt, this->movespeed, this->movespeedMax);
+		}
+	}
+	else if (this->status == 2)
+	{
+		if (this->direction == 1)
+		{
+			this->animation->play("RIGHT", dt, this->movespeed, this->movespeedMax);
+		}
+		else if (this->direction == 0)
+		{
+			this->animation->play("LEFT", dt, this->movespeed, this->movespeedMax);
+		}
+	}
+}
+
 void Player::updateAttack()
 {
 	if (this->atkcooldown < this->atkcooldownMax)
@@ -275,14 +326,14 @@ void Player::updateSword()
 {
 	if (this->direction == 1)
 	{
-		float x = this->atkboxR->getPos().x - 22.f;
-		float y = this->atkboxR->getPos().y - 27.f;
+		float x = this->atkboxR->getPos().x - 26.f;
+		float y = this->atkboxR->getPos().y - 20.f;
 		this->sword->setPos(x,y);
 	}
 	else if (this->direction == 0)
 	{
-		float x = this->atkboxL->getPos().x;
-		float y = this->atkboxL->getPos().y - 27.f ;
+		float x = this->atkboxL->getPos().x - 10.f;
+		float y = this->atkboxL->getPos().y - 20.f ;
 		this->sword->setPos(x, y);
 	}
 }
@@ -290,7 +341,7 @@ void Player::updateSword()
 void Player::update()
 {
 	this->updateAttack();
-	this->updateSprite();
+	//this->updateSprite();
 	this->updateBox();
 	if(this->weapon == "sword")
 		this->updateSword();
@@ -299,13 +350,13 @@ void Player::update()
 void Player::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
-	this->hitbox->render(target);
+	//this->hitbox->render(target);
 	if (this->status == 1)
 	{
-		if (this->direction == 1)
-			this->atkboxR->render(target);
-		else if (this->direction == 0)
-			this->atkboxL->render(target);
+		//if (this->direction == 1)
+			//this->atkboxR->render(target);
+		//else if (this->direction == 0)
+			//this->atkboxL->render(target);
 		if (this->weapon == "sword")
 		{
 			this->sword->render(target, this->direction);

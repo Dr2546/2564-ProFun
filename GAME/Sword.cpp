@@ -2,22 +2,22 @@
 
 void Sword::initHitbox()
 {
-	this->hitboxR = new Hitbox(this->sprite, 24.5f, 24.7f, 71.3f, 4.7f, Color::Blue);
-	this->hitboxL = new Hitbox(this->sprite, 0.f, 24.7f, 71.3f, 4.7f, Color::Blue);
+	this->hitboxR = new Hitbox(this->sprite, 26.f, 20.f, 50.f, 5.f, Color::Blue);
+	this->hitboxL = new Hitbox(this->sprite, 0.f, 20.f, 50.f, 5.f, Color::Blue);
 }
 
 void Sword::initSword()
 {
-	if (!this->textureR.loadFromFile("Resources/Sword/swordR.png"));
+	if (!this->textureR.loadFromFile("Resources/Sword/swordR2.png"));
 	{
 		cout << "Error";
 	}
-	if (!this->textureL.loadFromFile("Resources/Sword/swordL.png"));
+	if (!this->textureL.loadFromFile("Resources/Sword/swordL2.png"));
 	{
 		cout << "Error";
 	}
 	this->sprite.setTexture(this->textureR);
-	this->sprite.setScale(0.05f, 0.05f);
+	this->sprite.setScale(0.70f, 0.70f);
 }
 
 Sword::Sword()
@@ -33,10 +33,10 @@ Sword::~Sword()
 vector<float> Sword::getHitboxR() const
 {
 	vector<float> v;
-	v.push_back(24.5f);
-	v.push_back(24.7f);
-	v.push_back(71.3f);
-	v.push_back(4.7f);
+	v.push_back(26.f);
+	v.push_back(20.f);
+	v.push_back(50.f);
+	v.push_back(5.f);
 	return v;
 }
 
@@ -44,9 +44,9 @@ vector<float> Sword::getHitboxL() const
 {
 	vector<float> v;
 	v.push_back(0.f);
-	v.push_back(24.7f);
-	v.push_back(71.3f);
-	v.push_back(4.7f);
+	v.push_back(26.f);
+	v.push_back(50.f);
+	v.push_back(5.f);
 	return v;
 }
 

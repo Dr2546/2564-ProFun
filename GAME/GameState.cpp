@@ -45,6 +45,60 @@ void GameState::resetGUI()
 		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0));
 }
 
+void GameState::initBackground()
+{
+	if (!this->bg1.loadFromFile("Resources/Background/bg1.jpg"))
+		cout << "Failed to load bg" << "\n";
+	if (!this->bg2.loadFromFile("Resources/Background/bg2.jpg"))
+		cout << "Failed to load bg" << "\n";
+	if (!this->bg3.loadFromFile("Resources/Background/bg3.jpg"))
+		cout << "Failed to load bg" << "\n";
+	if (!this->bg4.loadFromFile("Resources/Background/bg4.jpg"))
+		cout << "Failed to load bg" << "\n";
+	
+	Vector2u Ts;
+	Vector2u Ws = this->window->getSize();
+
+	float scalex, scaley;
+
+	int r = rand() % 4;
+	if (r == 0)
+	{
+		Ts = bg1.getSize();
+		scalex = (float)Ws.x / Ts.x;
+		scaley = (float)Ws.y / Ts.y;
+		this->bgsprite.setTexture(bg1);
+	}
+	else if (r == 1)
+	{
+		Ts = bg2.getSize();
+		scalex = (float)Ws.x / Ts.x;
+		scaley = (float)Ws.y / Ts.y;
+		this->bgsprite.setTexture(bg2);
+	}
+	else if (r == 2)
+	{
+		Ts = bg3.getSize();
+		scalex = (float)Ws.x / Ts.x;
+		scaley = (float)Ws.y / Ts.y;
+		this->bgsprite.setTexture(bg3);
+	}
+	else if (r == 3)
+	{
+		Ts = bg4.getSize();
+		scalex = (float)Ws.x / Ts.x;
+		scaley = (float)Ws.y / Ts.y;
+		this->bgsprite.setTexture(bg4);
+	}
+
+	this->bgsprite.setScale(scalex, scaley);
+
+	this->playareaup = 40.f * scaley;
+	this->playareadown = 175.f * scaley;
+	this->playarealeft = 0.f;
+	this->playarearight = 1800.f;
+}
+
 void GameState::initPlayer()
 {
 	this->player = new Player();
@@ -99,6 +153,7 @@ GameState::GameState(StateData* statedata,string name) : State(statedata)
 	this->initEnemy();
 	this->initItem();
 	this->initPausemenu();
+	this->initBackground();
 	this->initGUI();
 	this->resetGUI();
 }
@@ -114,6 +169,7 @@ GameState::~GameState()
 		delete ii;
 
 	delete this->returntomenu;
+
 }
 
 void GameState::updateInput(const float& dt)
@@ -143,7 +199,7 @@ void GameState::updateMovement()
 {
 	if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		if (this->player->getPos().x >= 0)
+		if (this->player->getPos().x >= this->playarealeft)
 		{
 			this->player->move(-1.f, 0.f);
 			this->player->setDirection(0);
@@ -152,7 +208,7 @@ void GameState::updateMovement()
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		if (this->player->getPos().x <= 1800)
+		if (this->player->getPos().x <= this->playarearight)
 		{
 			this->player->move(1.f, 0.f);
 			this->player->setDirection(1);
@@ -161,7 +217,7 @@ void GameState::updateMovement()
 	}
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		if (this->player->getPos().y >= 0)
+		if (this->player->getPos().y >= this->playareaup)
 		{
 			this->player->move(0.f, -1.f);
 			this->player->setStatus(2);
@@ -169,7 +225,7 @@ void GameState::updateMovement()
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		if (this->player->getPos().y <= 960)
+		if (this->player->getPos().y <= this->playareadown)
 		{
 			this->player->move(0.f, 1.f);
 			this->player->setStatus(2);
@@ -350,8 +406,9 @@ void GameState::update(const float& dt)
 		{
 			this->player->update();
 			this->updateMovement();
-			this->updateEnemy(dt);
-			this->updateItem();
+			//this->updateEnemy(dt);
+			this->player->playAnimation(dt);
+			//this->updateItem();
 			this->updateBuff();
 			this->updateGUI();
 			if (this->player->getHp() <= 0 && this->isSave == false)
@@ -379,6 +436,8 @@ void GameState::render(RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
+
+	this->window->draw(this->bgsprite);
 
 	if (this->player->getHp() <= 0)
 	{

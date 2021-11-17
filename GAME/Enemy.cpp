@@ -118,5 +118,5 @@ void Enemy::playAnimation(const float& dt)
 void Enemy::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
-	this->hitbox->render(target);
+	//this->hitbox->render(target);
 }

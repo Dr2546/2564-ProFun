@@ -44,6 +44,14 @@ private:
 	Text gameovertext;
 	gui::Button* returntomenu;
 
+	//Background
+	Sprite bgsprite;
+	Texture bg1;
+	Texture bg2;
+	Texture bg3;
+	Texture bg4;
+	float playareaup, playareadown, playarealeft, playarearight;
+
 	//PauseMenu
 	RectangleShape container;
 	Text ptext;
@@ -57,6 +65,7 @@ private:
 	void initEnemy();
 	void initItem();
 	void initPausemenu();
+	void initBackground();
 public:
 	GameState(StateData* statedata,string name);
 	virtual ~GameState();
