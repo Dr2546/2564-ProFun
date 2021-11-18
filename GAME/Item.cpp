@@ -83,5 +83,5 @@ void Item::update()
 void Item::render(RenderTarget& target)
 {
 	target.draw(this->sprite);
-	this->hitbox->render(target);
+	//this->hitbox->render(target);
 }

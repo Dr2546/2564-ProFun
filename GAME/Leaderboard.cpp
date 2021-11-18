@@ -34,22 +34,24 @@ void Leaderboard::initScoreboard()
 
 void Leaderboard::initGUI()
 {
-	this->board.setString("Leaderboard");
-	this->board.setCharacterSize(50);
-	this->board.setFillColor(Color::White);
-	this->board.setPosition(
-		this->window->getSize().x / 2.f - this->board.getGlobalBounds().width / 2.f,
-		100.f);
 	this->board.setFont(this->font);
+	this->board.setString("Leaderboard");
+	this->board.setCharacterSize(70);
+	this->board.setFillColor(Color::White);
+	this->board.setOrigin(this->board.getLocalBounds().width / 2.f, this->board.getLocalBounds().height / 2.f);
+	this->board.setPosition(this->window->getSize().x / 2.f, 150.f);
 
-	this->line1.setSize(Vector2f(this->window->getSize().x / 2.f - this->board.getGlobalBounds().width / 2.f, 5.f));
-	this->line1.setPosition(Vector2f(this->window->getSize().x / 2.f - this->board.getGlobalBounds().width / 2.f, 160.f));
+	this->line1.setSize(Vector2f(this->window->getSize().x / 2.f, 5.f));
+	this->line1.setPosition(Vector2f(this->window->getSize().x / 4.f , 250.f));
 	this->line1.setFillColor(Color::White);
 
-	this->line2.setSize(Vector2f(this->window->getSize().x / 2.f - this->board.getGlobalBounds().width / 2.f, 5.f));
-	this->line2.setPosition(Vector2f(this->board.getGlobalBounds().width / 2.f, 160.f));
+	this->line2.setSize(Vector2f(5.f, this->window->getSize().y/2.f));
+	this->line2.setPosition(Vector2f(this->window->getSize().x / 2.f - 5.f, 250.f));
 	this->line2.setFillColor(Color::White);
-	this->line2.setRotation(90.f);
+
+	this->line3.setSize(Vector2f(this->window->getSize().x / 2.f, 5.f));
+	this->line3.setPosition(Vector2f(this->window->getSize().x / 4.f, 250.f + this->window->getSize().y/2.f));
+	this->line1.setFillColor(Color::White);
 }
 
 void Leaderboard::initFont()
@@ -60,13 +62,17 @@ void Leaderboard::initFont()
 
 void Leaderboard::initButtons()
 {
-	this->buttons["BACK"] = new gui::Button(100.f, 200.f, 100.f, 100.f, &this->font, "Back", 50,
+	this->buttons["BACK"] = new gui::Button(this->window->getSize().x / 3.f, 900.f,
+		250.f, 50.f, &this->font, "Back", 50,
 		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0)
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50)
 	);
-	this->buttons["CLEAR"] = new gui::Button(100.f, 400.f, 100.f, 100.f, &this->font, "Clear Board", 50,
+	this->buttons["CLEAR"] = new gui::Button(this->window->getSize().x * 2.f / 3.f - 250.f, 900.f,
+		250.f, 50.f, &this->font, "Clear Board", 50,
 		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0)
+		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
+		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50)
 	);
 }
 
@@ -93,7 +99,8 @@ void Leaderboard::initScoreboardText()
 		dumname.setFillColor(Color::White);
 		dumname.setFont(this->font);
 		dumname.setString(its->first);
-		dumname.setPosition(Vector2f(800.f, 200.f + space));
+		dumname.setOrigin(dumname.getLocalBounds().width / 2.f, dumname.getLocalBounds().height / 2.f);
+		dumname.setPosition(Vector2f(this->window->getSize().x / 3.f, 300.f + space));
 		players.push_back(dumname);
 
 		Text dumscore;
@@ -101,7 +108,8 @@ void Leaderboard::initScoreboardText()
 		dumscore.setFillColor(Color::White);
 		dumscore.setFont(this->font);
 		dumscore.setString(to_string(its->second));
-		dumscore.setPosition(Vector2f(1000.f, 200.f + space));
+		dumscore.setOrigin(dumscore.getLocalBounds().width / 2.f, dumscore.getLocalBounds().height / 2.f);
+		dumscore.setPosition(Vector2f(this->window->getSize().x * 2.f / 3.f, 300.f + space));
 		player_score.push_back(dumscore);
 
 		space += 100.f;
@@ -174,6 +182,7 @@ void Leaderboard::renderGUI()
 	this->window->draw(this->board);
 	this->window->draw(this->line1);
 	this->window->draw(this->line2);
+	this->window->draw(this->line3);
 }
 
 void Leaderboard::renderButtons()

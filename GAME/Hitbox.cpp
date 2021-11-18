@@ -7,6 +7,9 @@ Hitbox::Hitbox(Sprite& sprite, float offset_X, float offset_Y, float width, floa
 	this->nextPos.width = width;
 	this->nextPos.height = height;
 
+	this->width = width;
+	this->height = height;
+
 	this->hitbox.setPosition(Vector2f(this->sprite.getPosition().x + offset_X, this->sprite.getPosition().y + offset_Y));
 	this->hitbox.setSize(Vector2f(width, height));
 	this->hitbox.setFillColor(Color::Transparent);
@@ -34,6 +37,16 @@ const FloatRect Hitbox::getnextPos(Vector2f& velocity)
 	this->nextPos.top = this->hitbox.getPosition().y + velocity.y;
 
 	return this->nextPos;
+}
+
+const float Hitbox::getWidth() const
+{
+	return this->width;
+}
+
+const float Hitbox::getHeight() const
+{
+	return this->height;
 }
 
 void Hitbox::setPos(Vector2f& position)

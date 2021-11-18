@@ -5,7 +5,7 @@ void Player::initVar()
 {
 	this->movespeedMax = 2.f;
 	this->movespeed = this->movespeedMax;
-	this->hpmax = 10;
+	this->hpmax = 2;
 	this->hp = this->hpmax;
 	this->atkcooldownMax = 10.f;
 	this->atkcooldown = this->atkcooldownMax;
@@ -123,6 +123,16 @@ const int Player::getHpMax() const
 const int Player::getDirection() const
 {
 	return this->direction;
+}
+
+bool Player::checkInside(float x, float y)
+{
+	float posx = this->hitbox->getPos().x - 100.f;
+	float posy = this->hitbox->getPos().y - 100.f;
+	if (posx < x && x < posx + this->hitbox->getWidth() + 200.f && posy < y && y < posy + this->hitbox->getHeight() + 200.f)
+		return true;
+	else
+		return false;
 }
 
 void Player::setSpeed(float s)

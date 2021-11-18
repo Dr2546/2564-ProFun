@@ -42,6 +42,7 @@ private:
 	Font font;
 	Text scoretext;
 	Text gameovertext;
+	RectangleShape gameoverbox;
 	gui::Button* returntomenu;
 
 	//Background
@@ -77,7 +78,7 @@ public:
 
 	//Additional Function
 	void updatePollevent();
-	void updateMovement();
+	void updateMovement(const float& dt);
 	void updateEnemy(const float& dt);
 	void updateButton();
 	void updateGUI();

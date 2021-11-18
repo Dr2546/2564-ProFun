@@ -70,6 +70,7 @@ public:
 	const float getSpeedMax() const;
 	const int getHpMax() const;
 	const int getDirection() const;
+	bool checkInside(float x, float y);
 	void setSpeed(float s);
 	void setHp(int s);
 	string getWeapon();

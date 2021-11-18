@@ -1,7 +1,9 @@
-da 2
-dan 3
+da 5
 d 0
-d 4
-d 1
+dan 0
+da 0
+a 0
+pjow 1
+pau 0
+wtf 7
 d 0
-d 18

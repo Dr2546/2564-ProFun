@@ -14,6 +14,7 @@ private:
 	Font font;
 	RectangleShape line1;
 	RectangleShape line2;
+	RectangleShape line3;
 	vector<Text> players;
 	vector<Text> player_score;
 

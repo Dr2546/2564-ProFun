@@ -14,9 +14,26 @@ private:
 	map<string, gui::Button*> buttons;
 	map<string, gui::Textbox*> textboxes;
 
+	//Background 
+	RectangleShape con1;
+	RectangleShape con2;
+	Text gamename;
+	Text student;
+
+	Sprite sprite;
+	Texture sheet;
+
+	void initVar();
+	void initSprite();
+	void initTexture();
 	void initGUI();
+	void initBg();
 	void initFont();
+	void initAnimation();
 	void resetGUI();
+
+protected:
+	Animation* animation;
 
 public:
 
@@ -30,6 +47,8 @@ public:
 	void update(const float& dt);
 	void renderButton(RenderTarget& target);
 	void renderTextbox(RenderTarget& target);
+	void renderBg(RenderTarget& target);
 	void render(RenderTarget* target = NULL);
+	void playAnimation(const float& dt);
 };
 

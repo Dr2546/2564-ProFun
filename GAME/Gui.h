@@ -18,6 +18,7 @@ namespace gui
 
 		RectangleShape shape;
 		Font* font;
+		Font font2;
 		Text text;
 
 		Color textIdleColor;

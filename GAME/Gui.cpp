@@ -12,14 +12,17 @@ gui::Button::Button(float x, float y, float width, float height, Font* font, str
 	this->shape.setOutlineThickness(1.f);
 
 	this->font = font;
+	if (!this->font2.loadFromFile("Resources/PixellettersFull.ttf"))
+		cout << "Failed to load font" << "\n";
 
-	this->text.setFont(*this->font);
+	this->text.setFont(font2);
 	this->text.setString(text);
 	this->text.setCharacterSize(char_size);
 	this->text.setFillColor(tic);
+	this->text.setOrigin(this->text.getLocalBounds().width / 2.f, this->text.getLocalBounds().height / 2.f);
 	this->text.setPosition(
-		this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-		this->shape.getPosition().y
+		this->shape.getPosition().x + width/2.f,
+		this->shape.getPosition().y 
 	);
 
 	this->textActiveColor = tac;
@@ -136,6 +139,8 @@ void gui::Textbox::getInput(int charType)
 	}
 	//cout << "y";
 	this->textbox.setString(this->text.str());
+	this->textbox.setOrigin(this->textbox.getLocalBounds().width / 2.f, this->textbox.getLocalBounds().height / 2.f);
+	this->textbox.setPosition(this->shape.getPosition().x + this->shape.getSize().x / 2.f, this->shape.getPosition().y);
 }
 
 gui::Textbox::Textbox(float x, float y, float height, float width, int lim, int char_size, Font* font, bool sel)
