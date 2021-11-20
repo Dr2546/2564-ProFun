@@ -22,6 +22,8 @@ private:
 
 	Sprite sprite;
 	Texture sheet;
+	Sprite spritebg;
+	Texture txtbg;
 
 	void initVar();
 	void initSprite();

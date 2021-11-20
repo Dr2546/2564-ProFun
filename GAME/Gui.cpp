@@ -126,7 +126,7 @@ void gui::Textbox::backspace()
 
 void gui::Textbox::getInput(int charType)
 {
-	if (charType != ESC && charType != BACKSPACE && charType != ENTER && charType != SPACEBAR)
+	if (charType != ESC && charType != BACKSPACE && charType != ENTER && charType != SPACEBAR && charType != TAB)
 	{
 		this->text << static_cast<char>(charType);
 	}
@@ -147,15 +147,15 @@ gui::Textbox::Textbox(float x, float y, float height, float width, int lim, int 
 {
 	this->shape.setPosition(Vector2f(x, y));
 	this->shape.setSize(Vector2f(height, width));
-	this->shape.setFillColor(Color::White);
-	this->shape.setOutlineColor(Color::White);
+	this->shape.setFillColor(Color(75,75,75));
+	this->shape.setOutlineColor(Color::Black);
 	this->shape.setOutlineThickness(1.f);
 
 	this->font = font;
 
 	this->textbox.setFont(*this->font);
 	this->textbox.setCharacterSize(char_size);
-	this->textbox.setFillColor(Color::Black);
+	this->textbox.setFillColor(Color::White);
 	this->textbox.setPosition(
 		this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->textbox.getGlobalBounds().width / 2.f,
 		this->shape.getPosition().y
@@ -223,13 +223,13 @@ void gui::Textbox::update(const Vector2i& mousePosWindow)
 	switch (this->isSelect)
 	{
 	case true:
-		this->shape.setOutlineColor(Color::Blue);
+		this->shape.setOutlineColor(Color::White);
 		break;
 	case false:
-		this->shape.setOutlineColor(Color::White);
+		this->shape.setOutlineColor(Color::Black);
 		break;
 	default:
-		this->shape.setOutlineColor(Color::White);
+		this->shape.setOutlineColor(Color::Black);
 		break;
 	}
 }

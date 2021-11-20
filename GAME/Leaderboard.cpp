@@ -32,8 +32,33 @@ void Leaderboard::initScoreboard()
 	this->scoreboard.close();
 }
 
+void Leaderboard::initSprite()
+{
+	Vector2u Ts;
+	Vector2u Ws = this->window->getSize();
+
+	float scalex, scaley;
+	Ts = txtbg.getSize();
+	scalex = (float)Ws.x / Ts.x;
+	scaley = (float)Ws.y / Ts.y;
+	this->spritebg.setTexture(txtbg);
+	this->spritebg.setScale(scalex, scaley);
+}
+
+void Leaderboard::initTexture()
+{
+	if (!this->txtbg.loadFromFile("Resources/Background/bg5.jpg"))
+	{
+		cout << "Could not load texture file." << "\n";
+	}
+}
+
 void Leaderboard::initGUI()
 {
+	this->leaderbox.setPosition(Vector2f(this->window->getSize().x / 4.f - 50.f, 125.f));
+	this->leaderbox.setSize(Vector2f(this->window->getSize().x / 2.f + 100.f, 200.f + this->window->getSize().y / 2.f));
+	this->leaderbox.setFillColor(Color(75, 75, 75));
+
 	this->board.setFont(this->font);
 	this->board.setString("Leaderboard");
 	this->board.setCharacterSize(70);
@@ -52,6 +77,32 @@ void Leaderboard::initGUI()
 	this->line3.setSize(Vector2f(this->window->getSize().x / 2.f, 5.f));
 	this->line3.setPosition(Vector2f(this->window->getSize().x / 4.f, 250.f + this->window->getSize().y/2.f));
 	this->line1.setFillColor(Color::White);
+
+	this->con1.setFillColor(Color(75, 75, 75));
+	this->con1.setPosition(Vector2f(0.f, 0.f));
+	this->con1.setSize(Vector2f(this->window->getSize().x, 100.f));
+
+	this->con2.setFillColor(Color(75, 75, 75));
+	this->con2.setPosition(Vector2f(0.f, this->window->getSize().y - 80.f));
+	this->con2.setSize(Vector2f(this->window->getSize().x, 80.f));
+
+	this->gamename.setFont(font);
+	this->gamename.setCharacterSize(80);
+	this->gamename.setFillColor(Color(255, 99, 71));
+	this->gamename.setString("C a s t l e     B r e a k");
+	this->gamename.setOrigin(this->gamename.getLocalBounds().width / 2.f, this->gamename.getLocalBounds().height / 2.f);
+	this->gamename.setPosition(
+		this->con1.getPosition().x + this->con1.getSize().x / 2.f,
+		this->con1.getPosition().y + this->con1.getSize().y / 4.f - 10.f);
+
+	this->student.setFont(font);
+	this->student.setCharacterSize(50);
+	this->student.setFillColor(Color::Black);
+	this->student.setString("64010272 Daniel Riyavong");
+	this->student.setOrigin(this->student.getLocalBounds().width / 2.f, this->student.getLocalBounds().height / 2.f);
+	this->student.setPosition(
+		this->con2.getPosition().x + this->con2.getSize().x / 2.f,
+		this->con2.getPosition().y + this->con2.getSize().y / 4.f);
 }
 
 void Leaderboard::initFont()
@@ -64,15 +115,15 @@ void Leaderboard::initButtons()
 {
 	this->buttons["BACK"] = new gui::Button(this->window->getSize().x / 3.f, 900.f,
 		250.f, 50.f, &this->font, "Back", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50)
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75, 75, 75), Color(75, 75, 75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255, 255, 255)
 	);
 	this->buttons["CLEAR"] = new gui::Button(this->window->getSize().x * 2.f / 3.f - 250.f, 900.f,
 		250.f, 50.f, &this->font, "Clear Board", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50)
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75, 75, 75), Color(75, 75, 75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255, 255, 255)
 	);
 }
 
@@ -127,8 +178,10 @@ int Leaderboard::get_rank(string input)
 
 Leaderboard::Leaderboard(StateData* statedata) : State(statedata)
 {
+	this->initTexture();
 	this->initFont();
 	this->initGUI();
+	this->initSprite();
 	this->initScoreboard();
 	this->initScoreboardText();
 	this->initButtons();
@@ -179,10 +232,17 @@ void Leaderboard::updateButtons()
 
 void Leaderboard::renderGUI()
 {
+	this->window->draw(this->spritebg);
+	this->window->draw(this->leaderbox);
 	this->window->draw(this->board);
 	this->window->draw(this->line1);
 	this->window->draw(this->line2);
 	this->window->draw(this->line3);
+	this->window->draw(this->con1);
+	this->window->draw(this->con1);
+	this->window->draw(this->con2);
+	this->window->draw(this->gamename);
+	this->window->draw(this->student);
 }
 
 void Leaderboard::renderButtons()

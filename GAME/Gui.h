@@ -6,6 +6,7 @@ enum buttonstate{ IDLE = 0,HOVER,PRESS };
 #define ESC 27
 #define ENTER 13
 #define SPACEBAR 32
+#define TAB 9
 
 namespace gui
 {

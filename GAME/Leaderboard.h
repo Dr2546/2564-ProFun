@@ -17,11 +17,21 @@ private:
 	RectangleShape line3;
 	vector<Text> players;
 	vector<Text> player_score;
+	RectangleShape con1;
+	RectangleShape con2;
+	Text gamename;
+	Text student;
+	RectangleShape leaderbox;
+
+	Sprite spritebg;
+	Texture txtbg;
 
 	//Button
 	map<string, gui::Button*> buttons;
 
 	void initScoreboard();
+	void initSprite();
+	void initTexture();
 	void initGUI();
 	void initFont();
 	void initButtons();

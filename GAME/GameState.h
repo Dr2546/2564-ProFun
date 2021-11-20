@@ -30,6 +30,7 @@ private:
 	vector<Enemy*> enemies;
 	float spawnTime;
 	float spawnTimeMax;
+	int wave;
 
 	//Item
 	vector<Item*> items;
@@ -44,6 +45,7 @@ private:
 	Text gameovertext;
 	RectangleShape gameoverbox;
 	gui::Button* returntomenu;
+	RectangleShape scorebox;
 
 	//Background
 	Sprite bgsprite;
@@ -85,6 +87,8 @@ public:
 	void updateFile();
 	void updateItem();
 	void updateBuff();
+	void updateWave();
+	void updateRate();
 	void updatePausemenu();
 	void renderGUI();
 	void renderPausemenu();

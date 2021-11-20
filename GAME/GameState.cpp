@@ -6,11 +6,16 @@ void GameState::initGUI()
 		cout << "Failed to load font" << "\n";
 
 	this->scoretext.setFont(font);
-	this->scoretext.setCharacterSize(30);
-	this->scoretext.setFillColor(sf::Color::Red);
+	this->scoretext.setCharacterSize(50);
+	this->scoretext.setFillColor(Color::Black);
 	this->scoretext.setString("score: 0");
 	this->scoretext.setPosition(
 		this->window->getSize().x / 2.f, 0.f);
+
+	this->scorebox.setFillColor(Color(75, 75, 75));
+	this->scorebox.setPosition(Vector2f(this->window->getSize().x / 2.f - 40.f, 10.f));
+	this->scorebox.setSize(Vector2f(200.f, 60.f));
+	this->scorebox.setOutlineColor(Color::Black);
 
 	//PlayerGUI
 	this->hpbar.setSize(Vector2f(50.f, 10.f));
@@ -36,9 +41,9 @@ void GameState::initGUI()
 
 	this->returntomenu = new gui::Button(this->window->getSize().x/2.f - 75.f, this->window->getSize().y / 2.f + this->gameovertext.getGlobalBounds().height / 2.f + 75.f,
 		150.f, 50.f, &this->font, "Return", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50));
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75,75,75), Color(75,75,75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255,255,255));
 
 }
 
@@ -50,9 +55,9 @@ void GameState::resetGUI()
 
 	this->returntomenu = new gui::Button(this->window->getSize().x / 2.f - 75.f, this->window->getSize().y / 2.f + this->gameovertext.getGlobalBounds().height / 2.f + 75.f,
 		150.f, 50.f, &this->font, "Return", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50));
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75, 75, 75), Color(75, 75, 75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255, 255, 255));
 }
 
 void GameState::initBackground()
@@ -119,16 +124,17 @@ void GameState::initPlayer()
 
 void GameState::initEnemy()
 {
-	this->spawnTimeMax = 25.f;
-	this->spawnTime = 20.f;
+	this->spawnTimeMax = 200.f;
+	this->spawnTime = 0;
+	this->wave = 1;
 }
 
 void GameState::initItem()
 {
-	this->itemspawnTimeMax = 25.f;
-	this->itemspawnTime = 20.f;
+	this->itemspawnTimeMax = 300.f;
+	this->itemspawnTime = this->itemspawnTimeMax;
 
-	this->itemdurationMax = 3.f;
+	this->itemdurationMax = 2.f;
 	this->itemduration = 0.f;
 }
 
@@ -149,19 +155,19 @@ void GameState::initPausemenu()
 		this->window->getSize().x / 2.f - 30.f,
 		this->window->getSize().y / 2.f - 50.f);
 
-	this->resume = new gui::Button(this->container.getPosition().x + 175.f,
+	this->resume = new gui::Button(this->container.getPosition().x + 150.f,
 		this->window->getSize().y / 2.f, 
 		150.f, 50.f, &this->font, "Resume", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50));
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75, 75, 75), Color(75, 75, 75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255, 255, 255));
 
-	this->quit = new gui::Button(this->container.getPosition().x + 575.f,
+	this->quit = new gui::Button(this->container.getPosition().x + 590.f,
 		this->window->getSize().y / 2.f,
 		150.f, 50.f, &this->font, "Quit", 50,
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
-		Color(70, 70, 70, 0), Color(150, 150, 150, 0), Color(20, 20, 20, 0),
-		Color(200, 200, 200, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50));
+		Color(55, 55, 55), Color(255, 255, 255), Color(255, 255, 255),
+		Color(150, 150, 150), Color(75, 75, 75), Color(75, 75, 75),
+		Color(200, 200, 200), Color(255, 255, 255), Color(255, 255, 255));
 }
 
 GameState::GameState(StateData* statedata,string name) : State(statedata)
@@ -416,6 +422,43 @@ void GameState::updateBuff()
 	}
 }
 
+void GameState::updateRate()
+{
+	if (this->wave == 2)
+	{
+		this->spawnTimeMax = 150.f;
+	}
+	else if (this->wave == 3)
+	{
+		this->updateItem();
+		this->spawnTimeMax = 100.f;
+	}
+	else if (this->wave == 4)
+	{
+		this->updateItem();
+		this->spawnTimeMax = 50.f;
+		this->itemspawnTimeMax = 400.f;
+	}
+	else if (this->wave == 5)
+	{
+		this->updateItem();
+		this->spawnTimeMax = 20.f;
+		this->itemspawnTimeMax = 500.f;
+	}
+}
+
+void GameState::updateWave()
+{
+	if (this->score == 10)
+		this->wave = 2;
+	else if (this->score == 20)
+		this->wave = 3;
+	else if (this->score == 30)
+		this->wave = 4;
+	else if (this->score == 50)
+		this->wave = 5;
+}
+
 void GameState::updatePausemenu()
 {
 	if (this->resume->isPress() && this->getKeytime())
@@ -423,7 +466,6 @@ void GameState::updatePausemenu()
 	else if (this->quit->isPress() && this->getKeytime())
 		this->endState();
 }
-
 
 void GameState::update(const float& dt)
 {
@@ -446,8 +488,9 @@ void GameState::update(const float& dt)
 			this->player->update();
 			this->updateMovement(dt);
 			this->updateEnemy(dt);
-			//this->updateItem();
 			this->updateBuff();
+			this->updateWave();
+			this->updateRate();
 			this->updateGUI();
 			if (this->player->getHp() <= 0 && this->isSave == false)
 			{
@@ -505,6 +548,7 @@ void GameState::render(RenderTarget* target)
 			this->resume->render(*target);
 			this->quit->render(*target);
 		}
+		this->window->draw(this->scorebox);
 		this->window->draw(this->scoretext);
 	}
 }
