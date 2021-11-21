@@ -437,13 +437,13 @@ void GameState::updateRate()
 	{
 		this->updateItem();
 		this->spawnTimeMax = 50.f;
-		this->itemspawnTimeMax = 400.f;
+		this->itemspawnTimeMax = 350.f;
 	}
 	else if (this->wave == 5)
 	{
 		this->updateItem();
 		this->spawnTimeMax = 20.f;
-		this->itemspawnTimeMax = 500.f;
+		this->itemspawnTimeMax = 400.f;
 	}
 }
 
@@ -455,7 +455,7 @@ void GameState::updateWave()
 		this->wave = 3;
 	else if (this->score == 30)
 		this->wave = 4;
-	else if (this->score == 50)
+	else if (this->score >= 50)
 		this->wave = 5;
 }
 

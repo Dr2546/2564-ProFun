@@ -1,20 +1,23 @@
 ﻿  GameState.cpp
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(119,85): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(120,85): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(119,54): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(120,54): warning C4244: 'argument': conversion from 'T' to 'const float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(274,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(274,135): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(280,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(280,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(350,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(350,135): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(356,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(356,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(275,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(275,135): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(281,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(281,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(351,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(351,135): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(357,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lenovo\Dan\Dan\GAME\GAME\GameState.cpp(357,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Player.cpp
+  Generating Code...
+  LINK : C:\Users\Lenovo\Dan\Dan\GAME\x64\Debug\GAME.exe not found or not built by the last incremental link; performing full link
   GAME.vcxproj -> C:\Users\Lenovo\Dan\Dan\GAME\x64\Debug\GAME.exe
